@@ -1,10 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Json data</title>
-    <script>
-      let departments = [
+
+<head>
+  <title>Json data</title>
+  <style></style>
+</head>
+
+<body>
+  <h1>Json Data</h1>
+  <button onclick="myFunction()">Generate the DATA</button>
+  <script>
+    function myFunction() {
+      // Your task goes here
+      //code for generating the array of objects
+      let department = [
         "Department 1",
         "Department 2",
         "Department 3",
@@ -38,9 +47,9 @@
         let newObj = {
           Student: studentID,
           Department:
-            departments[Math.floor(Math.random() * departments.length)],
-          Year: Math.floor(Math.random() * 20) + 2000,
-          Semester: Math.floor(Math.random() * 8) + 1,
+            department[Math.floor(Math.random() * department.length)],
+          Year: Math.floor(Math.random() * 5) + 2000,
+          Semester: Math.floor(Math.random() * 4) + 1,
           Class: String.fromCharCode(65 + Math.floor(Math.random() * 4)),
           Batch: batches[Math.floor(Math.random() * batches.length)],
           Subject: subjects[Math.floor(Math.random() * subjects.length)],
@@ -50,157 +59,230 @@
         };
         dataArray.push(newObj);
       }
+      const pivotDataRow = {};
+      const rows = ["Department", "Class", "Batch", "Student"];
+      const columns = ["Year", "Semester", "Subject"];
+      const values = ["Written", "Practical", "Oral"];
+      dataArray.forEach((record) => {
+        // const department = record.Department;
+        // const subject = record.Subject;
+        // const year = record.Year;
+        // const semester = record.Semester;
+        // const batch = record.Batch;
+        // const classLetter = record.Class;
+        // const student = record.Student;
+        // const written = record.Written;
+        // const practical = record.Practical;
+        // const oral = record.Oral;
 
-      console.log(dataArray);
-    </script>
-    <style></style>
-  </head>
-  <body>
-    <h1>Json Data</h1>
-    <button onclick="myFunction()">Generate the DATA</button>
-    <script>
-      function myFunction() {
-        // Your task goes here
-        //code for generating the array of objects
-        let department = [
-          "Department 1",
-          "Department 2",
-          "Department 3",
-          "Department 4",
-          "Department 5",
-          "Department 6",
-          "Department 7",
-          "Department 8",
-          "Department 9",
-          "Department 10",
-        ];
-        let subjects = ["Subject 1", "Subject 2", "Subject 3"];
-        let batches = [
-          "Batch 1",
-          "Batch 2",
-          "Batch 3",
-          "Batch 4",
-          "Batch 5",
-          "Batch 6",
-          "Batch 7",
-          "Batch 8",
-          "Batch 9",
-          "Batch 10",
-        ];
+        // if (!pivotDataRow[department]) {
+        //   pivotDataRow[department] = {};
+        // }
+        // if (!pivotDataRow[department][classLetter]) {
+        //   pivotDataRow[department][classLetter] = {};
+        // }
+        // if (!pivotDataRow[department][classLetter][batch]) {
+        //   pivotDataRow[department][classLetter][batch] = {};
+        // }
+        // if (!pivotDataRow[department][classLetter][batch][student]) {
+        //   pivotDataRow[department][classLetter][batch][student] = {};
+        // }
 
-        let dataArray = [];
-
-        for (let i = 0; i < 500; i++) {
-          let studentID = "STU" + i.toString().padStart(4, "0");
-
-          let newObj = {
-            Student: studentID,
-            Department:
-              department[Math.floor(Math.random() * department.length)],
-            Year: Math.floor(Math.random() * 20) + 2000,
-            Semester: Math.floor(Math.random() * 8) + 1,
-            Class: String.fromCharCode(65 + Math.floor(Math.random() * 4)),
-            Batch: batches[Math.floor(Math.random() * batches.length)],
-            Subject: subjects[Math.floor(Math.random() * subjects.length)],
-            Written: Math.floor(Math.random() * 51),
-            Practical: Math.floor(Math.random() * 31),
-            Oral: Math.floor(Math.random() * 21),
-          };
-          dataArray.push(newObj);
+        // pivotDataRow[department][classLetter][batch][student][
+        //   year + "-" + semester + "-" + subject
+        // ] = {
+        //   Written: written,
+        //   Practical: practical,
+        //   Oral: oral,
+        // };
+        if (!pivotDataRow[rows[0]]) {
+          pivotDataRow[rows[0]] = [];
         }
-        const pivotDataRow = {};
-        dataArray.forEach((record) => {
-          const department = record.Department;
-          const subject = record.Subject;
-          const year = record.Year;
-          const semester = record.Semester;
-          const batch = record.Batch;
-          const classLetter = record.Class;
-          const student = record.Student;
-          const written = record.Written;
-          const practical = record.Practical;
-          const oral = record.Oral;
+        let dIndex = pivotDataRow[rows[0]].findIndex((obj) => obj.value == record[rows[0]]);
+        if (dIndex > -1) {
+          if (!pivotDataRow[rows[0]][dIndex][rows[1]]) {
+            pivotDataRow[rows[0]][dIndex][rows[1]] = [];
+          }
+          let cIndex = pivotDataRow[rows[0]][dIndex][rows[1]].findIndex((obj) => obj.value == record[rows[1]]);
+          if (cIndex > -1) {
+            if (!pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]]) {
+              pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]] = [];
+            }
+            let bIndex = pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]].findIndex((obj) => obj.value == record[rows[2]]);
+            if (bIndex > -1) {
+              if (!pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][bIndex][rows[3]]) {
+                pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][bIndex][rows[3]] = [];
+              }
+              let sIndex = pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][bIndex][rows[3]].findIndex((obj) => obj.value == record[rows[3]]);
+              if (sIndex > -1) {
+                // last row reached
+              } else {
+                pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][bIndex][rows[3]].push({
+                  value: record[rows[3]]
+                });
+              }
+            } else {
+              pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]].push({
+                value: record[rows[2]]
+              });
+              pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][0][rows[3]] = [];
+              pivotDataRow[rows[0]][dIndex][rows[1]][cIndex][rows[2]][0][rows[3]].push({
+                value: record[rows[3]]
+              });
+            }
+          } else {
+            pivotDataRow[rows[0]][dIndex][rows[1]].push({
+              value: record[rows[1]]
+            });
+            pivotDataRow[rows[0]][dIndex][rows[1]][0][rows[2]] = [];
+            pivotDataRow[rows[0]][dIndex][rows[1]][0][rows[2]].push({
+              value: record[rows[2]]
+            });
+            pivotDataRow[rows[0]][dIndex][rows[1]][0][rows[2]][0][rows[3]] = [];
+            pivotDataRow[rows[0]][dIndex][rows[1]][0][rows[2]][0][rows[3]].push({
+              value: record[rows[3]]
+            });
+          }
+        } else {
+          pivotDataRow[rows[0]].push({
+            value: record[rows[0]]
+          });
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]] = [];
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]].push({
+            value: record[rows[1]]
+          });
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]][0][rows[2]] = [];
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]][0][rows[2]].push({
+            value: record[rows[2]]
+          });
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]][0][rows[2]][0][rows[3]] = [];
+          pivotDataRow[rows[0]][pivotDataRow[rows[0]].length - 1][rows[1]][0][rows[2]][0][rows[3]].push({
+            value: record[rows[3]]
+          });
+        }
+      });
 
-          if (!pivotDataRow[department]) {
-            pivotDataRow[department] = {};
-          }
-          if (!pivotDataRow[department][classLetter]) {
-            pivotDataRow[department][classLetter] = {};
-          }
-          if (!pivotDataRow[department][classLetter][batch]) {
-            pivotDataRow[department][classLetter][batch] = {};
-          }
-          if (!pivotDataRow[department][classLetter][batch][student]) {
-            pivotDataRow[department][classLetter][batch][student] = {};
-          }
 
-          pivotDataRow[department][classLetter][batch][student][
-            year + "-" + semester + "-" + subject
-          ] = {
-            Written: written,
-            Practical: practical,
-            Oral: oral,
-          };
-        });
 
-        const rows = ["Department", "Class", "Batch", "Student"];
-        const columns = ["year", "semester", "subject"];
-        const values = ["Written", "Practical", "Oral"];
+      const pivotDataColumn = {};
 
-        const pivotDataColumn = {};
+      dataArray.forEach((record) => {
+        // const department = record.Department;
+        // const subject = record.Subject;
+        // const year = record.Year;
+        // const semester = record.Semester;
+        // const batch = record.Batch;
+        // const classLetter = record.Class;
+        // const student = record.Student;
+        // const written = record.Written;
+        // const practical = record.Practical;
+        // const oral = record.Oral;
 
-        dataArray.forEach((record) => {
-          const department = record.Department;
-          const subject = record.Subject;
-          const year = record.Year;
-          const semester = record.Semester;
-          const batch = record.Batch;
-          const classLetter = record.Class;
-          const student = record.Student;
-          const written = record.Written;
-          const practical = record.Practical;
-          const oral = record.Oral;
+        // if (!pivotDataColumn[year]) {
+        //   pivotDataColumn[year] = {};
+        // }
+        // if (!pivotDataColumn[year][semester]) {
+        //   pivotDataColumn[year][semester] = {};
+        // }
+        // if (!pivotDataColumn[year][semester][subject]) {
+        //   pivotDataColumn[year][semester][subject] = {};
+        // }
+        // if (!pivotDataColumn[year][semester][subject][department]) {
+        //   pivotDataColumn[year][semester][subject][department] = {};
+        // }
+        // if (
+        //   !pivotDataColumn[year][semester][subject][department][classLetter]
+        // ) {
+        //   pivotDataColumn[year][semester][subject][department][classLetter] =
+        //     {};
+        // }
+        // if (
+        //   !pivotDataColumn[year][semester][subject][department][classLetter][
+        //     batch
+        //   ]
+        // ) {
+        //   pivotDataColumn[year][semester][subject][department][classLetter][
+        //     batch
+        //   ] = {};
+        // }
 
-          if (!pivotDataColumn[year]) {
-            pivotDataColumn[year] = {};
+        // pivotDataColumn[year][semester][subject][department][classLetter][
+        //   batch
+        // ][student] = {
+        //   Written: written,
+        //   Practical: practical,
+        //   Oral: oral,
+        // };
+        if (!pivotDataColumn[columns[0]]) {
+          pivotDataColumn[columns[0]] = [];
+        }
+        let dIndex = pivotDataColumn[columns[0]].findIndex((obj) => obj.value == record[columns[0]]);
+        if (dIndex > -1) {
+          if (!pivotDataColumn[columns[0]][dIndex][columns[1]]) {
+            pivotDataColumn[columns[0]][dIndex][columns[1]] = [];
           }
-          if (!pivotDataColumn[year][semester]) {
-            pivotDataColumn[year][semester] = {};
+          let cIndex = pivotDataColumn[columns[0]][dIndex][columns[1]].findIndex((obj) => obj.value == record[columns[1]]);
+          if (cIndex > -1) {
+            if (!pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]]) {
+              pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]] = [];
+            }
+            let bIndex = pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]].findIndex((obj) => obj.value == record[columns[2]]);
+            if (bIndex > -1) {
+              // if (!pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][bIndex][columns[3]]) {
+              //   pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][bIndex][columns[3]] = [];
+              // }
+              // let sIndex = pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][bIndex][columns[3]].findIndex((obj) => obj.value == record[columns[3]]);
+              // if (sIndex > -1) {
+              //   // last row reached
+              // } else {
+              //   pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][bIndex][columns[3]].push({
+              //     value: record[columns[3]]
+              //   });
+              // }
+            } else {
+              pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]].push({
+                value: record[columns[2]]
+              });
+              // pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][0][columns[3]] = [];
+              // pivotDataColumn[columns[0]][dIndex][columns[1]][cIndex][columns[2]][0][columns[3]].push({
+              //   value: record[columns[3]]
+              // });
+            }
+          } else {
+            pivotDataColumn[columns[0]][dIndex][columns[1]].push({
+              value: record[columns[1]]
+            });
+            pivotDataColumn[columns[0]][dIndex][columns[1]][0][columns[2]] = [];
+            pivotDataColumn[columns[0]][dIndex][columns[1]][0][columns[2]].push({
+              value: record[columns[2]]
+            });
+            // pivotDataColumn[columns[0]][dIndex][columns[1]][0][columns[2]][0][columns[3]] = [];
+            // pivotDataColumn[columns[0]][dIndex][columns[1]][0][columns[2]][0][columns[3]].push({
+            //   value: record[columns[3]]
+            // });
           }
-          if (!pivotDataColumn[year][semester][subject]) {
-            pivotDataColumn[year][semester][subject] = {};
-          }
-          if (!pivotDataColumn[year][semester][subject][department]) {
-            pivotDataColumn[year][semester][subject][department] = {};
-          }
-          if (
-            !pivotDataColumn[year][semester][subject][department][classLetter]
-          ) {
-            pivotDataColumn[year][semester][subject][department][classLetter] =
-              {};
-          }
-          if (
-            !pivotDataColumn[year][semester][subject][department][classLetter][
-              batch
-            ]
-          ) {
-            pivotDataColumn[year][semester][subject][department][classLetter][
-              batch
-            ] = {};
-          }
+        } else {
+          pivotDataColumn[columns[0]].push({
+            value: record[columns[0]]
+          });
+          pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]] = [];
+          pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]].push({
+            value: record[columns[1]]
+          });
+          pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]][0][columns[2]] = [];
+          pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]][0][columns[2]].push({
+            value: record[columns[2]]
+          });
+          // pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]][0][columns[2]][0][columns[3]] = [];
+          // pivotDataColumn[columns[0]][pivotDataColumn[columns[0]].length - 1][columns[1]][0][columns[2]][0][columns[3]].push({
+          //   value: record[columns[3]]
+          // });
+        }
+      });
 
-          pivotDataColumn[year][semester][subject][department][classLetter][
-            batch
-          ][student] = {
-            Written: written,
-            Practical: practical,
-            Oral: oral,
-          };
-        });
+      console.log(pivotDataColumn, pivotDataRow);
+    }
+  </script>
+</body>
 
-        console.log(pivotDataColumn, pivotDataRow);
-      }
-    </script>
-  </body>
 </html>
-
