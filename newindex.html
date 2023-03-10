@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Json data</title>
+    <script>
+      let departments = [
+        "Department 1",
+        "Department 2",
+        "Department 3",
+        "Department 4",
+        "Department 5",
+        "Department 6",
+        "Department 7",
+        "Department 8",
+        "Department 9",
+        "Department 10",
+      ];
+      let subjects = ["Subject 1", "Subject 2", "Subject 3"];
+      let batches = [
+        "Batch 1",
+        "Batch 2",
+        "Batch 3",
+        "Batch 4",
+        "Batch 5",
+        "Batch 6",
+        "Batch 7",
+        "Batch 8",
+        "Batch 9",
+        "Batch 10",
+      ];
+
+      let dataArray = [];
+
+      for (let i = 0; i < 500; i++) {
+        let studentID = "STU" + i.toString().padStart(4, "0");
+
+        let newObj = {
+          Student: studentID,
+          Department:
+            departments[Math.floor(Math.random() * departments.length)],
+          Year: Math.floor(Math.random() * 20) + 2000,
+          Semester: Math.floor(Math.random() * 8) + 1,
+          Class: String.fromCharCode(65 + Math.floor(Math.random() * 4)),
+          Batch: batches[Math.floor(Math.random() * batches.length)],
+          Subject: subjects[Math.floor(Math.random() * subjects.length)],
+          Written: Math.floor(Math.random() * 51),
+          Practical: Math.floor(Math.random() * 31),
+          Oral: Math.floor(Math.random() * 21),
+        };
+        dataArray.push(newObj);
+      }
+
+      console.log(dataArray);
+    </script>
+    <style></style>
+  </head>
+  <body>
+    <h1>Json Data</h1>
+    <button onclick="myFunction()">Generate the DATA</button>
+    <script>
+      function myFunction() {
+        // Your task goes here
+        //code for generating the array of objects
+        let department = [
+          "Department 1",
+          "Department 2",
+          "Department 3",
+          "Department 4",
+          "Department 5",
+          "Department 6",
+          "Department 7",
+          "Department 8",
+          "Department 9",
+          "Department 10",
+        ];
+        let subjects = ["Subject 1", "Subject 2", "Subject 3"];
+        let batches = [
+          "Batch 1",
+          "Batch 2",
+          "Batch 3",
+          "Batch 4",
+          "Batch 5",
+          "Batch 6",
+          "Batch 7",
+          "Batch 8",
+          "Batch 9",
+          "Batch 10",
+        ];
+
+        let dataArray = [];
+
+        for (let i = 0; i < 500; i++) {
+          let studentID = "STU" + i.toString().padStart(4, "0");
+
+          let newObj = {
+            Student: studentID,
+            Department:
+              department[Math.floor(Math.random() * department.length)],
+            Year: Math.floor(Math.random() * 20) + 2000,
+            Semester: Math.floor(Math.random() * 8) + 1,
+            Class: String.fromCharCode(65 + Math.floor(Math.random() * 4)),
+            Batch: batches[Math.floor(Math.random() * batches.length)],
+            Subject: subjects[Math.floor(Math.random() * subjects.length)],
+            Written: Math.floor(Math.random() * 51),
+            Practical: Math.floor(Math.random() * 31),
+            Oral: Math.floor(Math.random() * 21),
+          };
+          dataArray.push(newObj);
+        }
+        const pivotDataRow = {};
+        dataArray.forEach((record) => {
+          const department = record.Department;
+          const subject = record.Subject;
+          const year = record.Year;
+          const semester = record.Semester;
+          const batch = record.Batch;
+          const classLetter = record.Class;
+          const student = record.Student;
+          const written = record.Written;
+          const practical = record.Practical;
+          const oral = record.Oral;
+
+          if (!pivotDataRow[department]) {
+            pivotDataRow[department] = {};
+          }
+          if (!pivotDataRow[department][classLetter]) {
+            pivotDataRow[department][classLetter] = {};
+          }
+          if (!pivotDataRow[department][classLetter][batch]) {
+            pivotDataRow[department][classLetter][batch] = {};
+          }
+          if (!pivotDataRow[department][classLetter][batch][student]) {
+            pivotDataRow[department][classLetter][batch][student] = {};
+          }
+
+          pivotDataRow[department][classLetter][batch][student][
+            year + "-" + semester + "-" + subject
+          ] = {
+            Written: written,
+            Practical: practical,
+            Oral: oral,
+          };
+        });
+
+        const rows = ["Department", "Class", "Batch", "Student"];
+        const columns = ["year", "semester", "subject"];
+        const values = ["Written", "Practical", "Oral"];
+
+        const pivotDataColumn = {};
+
+        dataArray.forEach((record) => {
+          const department = record.Department;
+          const subject = record.Subject;
+          const year = record.Year;
+          const semester = record.Semester;
+          const batch = record.Batch;
+          const classLetter = record.Class;
+          const student = record.Student;
+          const written = record.Written;
+          const practical = record.Practical;
+          const oral = record.Oral;
+
+          if (!pivotDataColumn[year]) {
+            pivotDataColumn[year] = {};
+          }
+          if (!pivotDataColumn[year][semester]) {
+            pivotDataColumn[year][semester] = {};
+          }
+          if (!pivotDataColumn[year][semester][subject]) {
+            pivotDataColumn[year][semester][subject] = {};
+          }
+          if (!pivotDataColumn[year][semester][subject][department]) {
+            pivotDataColumn[year][semester][subject][department] = {};
+          }
+          if (
+            !pivotDataColumn[year][semester][subject][department][classLetter]
+          ) {
+            pivotDataColumn[year][semester][subject][department][classLetter] =
+              {};
+          }
+          if (
+            !pivotDataColumn[year][semester][subject][department][classLetter][
+              batch
+            ]
+          ) {
+            pivotDataColumn[year][semester][subject][department][classLetter][
+              batch
+            ] = {};
+          }
+
+          pivotDataColumn[year][semester][subject][department][classLetter][
+            batch
+          ][student] = {
+            Written: written,
+            Practical: practical,
+            Oral: oral,
+          };
+        });
+
+        console.log(pivotDataColumn, pivotDataRow);
+      }
+    </script>
+  </body>
+</html>
+
